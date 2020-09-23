@@ -1,17 +1,18 @@
 import  React,{useState,useEffect}from 'react';
-import { Text, View,Image,StyleSheet ,TextInput,TouchableOpacity,AsyncStorage} from 'react-native';
+import { Text, View,StyleSheet ,TextInput,KeyboardAvoidingView,Platform,TouchableOpacity} from 'react-native';
 import Constants from 'expo-constants';
-import {Feather} from '@expo/vector-icons';
+import AsyncStorage from '@react-native-community/async-storage';
+
 import * as MailComposer from 'expo-mail-composer';
 import  { useNavigation} from '@react-navigation/native';
-import Logo from './../../assets/icon.png';
+
 export default function App() {
  const navigation=useNavigation();
 
  const [email,setEmail]=useState('');
 const [dados,setdados]=useState(['']);
   async function load(){
-   const date =  await  AsyncStorage.getItem('dados');
+   const date =  await  AsyncStorage.getItem('items');
     setdados(date);
 }
 useEffect(()=>{
@@ -20,20 +21,17 @@ useEffect(()=>{
  function sendEmail(){
    MailComposer.composeAsync({
      subject:'Geolocalizacao de arvores',
-     recipients:[email],
+     recipients:email,
      body: dados
    })
  }
-  function back(){
-  navigation.goBack()
-  }
+ function goBack(){
+  navigation.goBack();
+}
   return (
+    <KeyboardAvoidingView
+    behavior={Platform.OS == "ios" ? "padding" : "height"}style={{flex:1}}>
     <View style={styles.container}>
-       <Feather name='arrow-left' size={30} color="blue" onPress={back} style={{marginTop:-250}} />
-       <Image
-        style={{height:100,width:200,marginTop:-60,marginLeft:50}}
-        source={Logo}
-      />
      <TextInput placeholder='Email'
        autoCorrect={true}
        value={email}
@@ -44,7 +42,7 @@ useEffect(()=>{
        <TouchableOpacity onPress={()=>sendEmail()}style={styles.button}><Text style={styles.text}>Confirmar </Text></TouchableOpacity>
        </View>
     </View>
-
+    </KeyboardAvoidingView>
   );
 }
 
@@ -52,7 +50,8 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: 'center',
-    paddingTop: Constants.statusBarHeight=20,
+    marginTop:-300,
+    paddingTop: Constants.statusBarHeight,
     paddingHorizontal:24,
     padding: 8,
   },

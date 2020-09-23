@@ -1,95 +1,131 @@
 import React,{useState,useEffect} from 'react';
-import { Text,Image,FlatList,View, StyleSheet,TouchableOpacity,AsyncStorage} from 'react-native';
-import Logo from './../../assets/icon.png'
-import Constants from 'expo-constants';
+import { Text,FlatList,View, StyleSheet,TouchableOpacity,Alert,AsyncStorage} from 'react-native';
 import { Feather } from '@expo/vector-icons';
+import Constants from 'expo-constants';
+
 import { MaterialIcons} from '@expo/vector-icons';
-import {useNavigation} from '@react-navigation/native';
+import {useNavigation,useRoute} from '@react-navigation/native';
 export default function App() {
   const navigation = useNavigation();
-  const [dados,setresponse] =useState(['']);
-  async function load(){
-   const dados =  await  AsyncStorage.getItem('dados');
-    setresponse(JSON.parse(dados));
-}
-console.log(dados);
-
-useEffect(()=>{
-  load();
+  const route = useRoute();
  
-},[]);
- async function  clear(dado) {
-    try {
-     await AsyncStorage.removeItem(dado);
-        setresponse(dados.filter(date=>date != dado));
-        return true;
-    }
-    catch(exception) {
-        return false;
-  
- }
+const [items, setItems] = useState('');
 
+ async function getItems(){
+      return AsyncStorage.getItem('items')
+              .then(response => {
+                  if(response){
+                     
+                      return Promise.resolve(JSON.parse(response));
+                    }
+                
+                  else{
+                      return Promise.resolve([]);
+                  }
+              })
+  }
+  
+
+  
+ useEffect(()=>{
+  getItems().then(items => setItems(items));
+ },[route,createTwoButtonAlert])
+
+const createTwoButtonAlert = () =>{
+return Alert.alert(
+  "Alert Title",
+  "My Alert Msg",
+  [
+    {
+      text: "Cancel",
+      onPress: () => console.log("Cancel Pressed"),
+      style: "cancel"
+    },
+    { text: "OK", onPress: () => console.log("OK Pressed") }
+  ],
+  { cancelable: false }
+);
 }
-function back(){
-  navigation.navigate('Principal');
+async function clear(id){
+  await createTwoButtonAlert();
+  if(createTwoButtonAlert){
+   let savedItems = await getItems();
+   const index = await savedItems.find(item => item.id === id);
+   savedItems.splice(index, 1);
+   return AsyncStorage.setItem('items', JSON.stringify(savedItems));
+   
+  }
+ 
 }
-function send(dados){
-  navigation.navigate('Confirmacao',{dados});
+
+
+
+async function edition(id,items){
+  const index = await items.find(item => item.id === id);
+  navigation.navigate("Principal", index);
+}
+
+function send(){
+  navigation.navigate('Confirmacao');
 }
   return (
-    
     <View style={styles.container}>
-<View style={{justifyContent:'space-between',flex:1}}>
-    <Feather name="arrow-left" size={24} color="blue"    onPress={()=>back()} style={{marginTop:10}}/>
-    <Image
-        style={{height:90,width:200,marginLeft:40,marginTop:-40}}
-        source={Logo}
-      />
+      
+<View style={{justifyContent:'space-between'}}>
+    <FlatList
+     data={items}
+     keyExtractor={dado=>String(dado.id)}
+     showsHorizontalScrollIndicator={false}
+     renderItem={({item:dado})=>(
+       <View  style={{  marginBottom:15,
+         padding:15,
+         borderRadius:4,
+         backgroundColor:'#04d361',
+         display:'flex',
+         flex:1,
+         flexDirection:'row',
+         borderWidth:1,
+         borderColor:'#737380',
+         alignItems:'center',
+         shadowColor:'#737380',
+         shadowOpacity:5,
+         shadowRadius:2,
+         justifyContent:'space-between',
+         shadowOffset: {height:2,width:2}}}>
+       <View ><Text style={styles.text}>Name: {dado.name}</Text>
+        <Text style={styles.text}>Namepopular: {dado.namepopular}</Text>
+        <Text style={styles.text}>Informacoes: {dado.informacao}</Text>
+        <Text style={styles.text}>Latitude: {dado.latitude}</Text>
+        <Text style={styles.text}>Longitude: {dado.longitude}</Text>
+        </View>
+        <View >
+        <TouchableOpacity  >
+         <MaterialIcons
+         name="delete-forever"
+         size={30}
+         onPress={()=>clear(dado.id)}
+         color='red'
+         />
+         </TouchableOpacity>
+         <TouchableOpacity>
+         <MaterialIcons
+         name="edit"
+         size={30}
+         onPress={()=>edition(dado.id,items)}
+         color='blue'
+         />
+         </TouchableOpacity>
+       
+       </View>
+       </View>
+      
+     )}
+    />
  
     </View>
     <View  style={{flex:1,padding:20,height:600,display:'flex'}}>
-       <FlatList
-       style={{  flex:1,padding:20,height:20}}
-        data={dados}
-        keyExtractor={dado=>String(dado.name)}
-        showsHorizontalScrollIndicator={false}
-        renderItem={({item:dado})=>(
-          <View  style={{  marginBottom:15,
-            padding:15,
-            borderRadius:4,
-            backgroundColor:'#04d361',
-            display:'flex',
-            flex:1,
-            flexDirection:'row',
-            borderWidth:1,
-            borderColor:'#737380',
-            alignItems:'center',
-            shadowColor:'#737380',
-            shadowOpacity:5,
-            shadowRadius:2,
-            justifyContent:'space-between',
-            shadowOffset: {height:2,width:2}}}>
-          <View><Text style={styles.text}>Name: {dado.name}</Text>
-           <Text style={styles.text}>Namepopular: {dado.namepopular}</Text>
-           <Text style={styles.text}>Informacoes: {dado.informacao}</Text>
-           <Text style={styles.text}>Latitude: {dado.latitude}</Text>
-           <Text style={styles.text}>Longitude: {dado.longitude}</Text>
-           </View>
-           <View >
-           <TouchableOpacity  >
-            <MaterialIcons
-            name="delete-forever"
-            size={30}
-            onPress={()=>clear(dado)}
-            color='red'
-            />
-            
-          </TouchableOpacity>
+ 
           </View>
-          </View>
-         
-        )}
-        />
 
     <TouchableOpacity  style={{ height:40,
      borderWidth:1,
@@ -107,8 +143,6 @@ function send(dados){
     </TouchableOpacity>
 
       </View>
-      
-    </View>
 
   );
 }
@@ -117,7 +151,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: 'center',
-    paddingTop: Constants.statusBarHeight=20,
+     paddingTop: Constants.statusBarHeight,
     backgroundColor: '#ecf0f1',
     paddingHorizontal:24,
     padding: 8,
@@ -128,3 +162,7 @@ const styles = StyleSheet.create({
     fontWeight:'bold',
   }
 });
+
+export function goBack(){
+  navigation.navigator('Principal');
+}
