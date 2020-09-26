@@ -4,7 +4,8 @@ import { Text, View, StyleSheet,TextInput,TouchableOpacity,KeyboardAvoidingView,
 import * as Location from 'expo-location';
 import {useNavigation,useRoute} from '@react-navigation/native';
 import Constants from 'expo-constants';
-import { setStatusBarNetworkActivityIndicatorVisible } from 'expo-status-bar';
+
+
 
 export  default function Principal(){ 
   const [name,setname]=useState('');
@@ -38,28 +39,26 @@ export  default function Principal(){
     setlatitude(location.coords.latitude);
     setlongitude(location.coords.longitude);
     console.log(location.coords.latitude);
-   
-}
-
-
-const  data = {
-  id:new Date().getTime(),
+ 
+  }
+async function heads(){
+    
+const data={
   name,
   namepopular,
   informacao,
-  longitude,
-  latitude
+  latitude,
+  longitude
 }
-
- async function heads(data,id){
   data.id = id ? id : new Date().getTime();
-  const savedItems = [];
+  let savedItems=[]
   const response = await AsyncStorage.getItem('items');
+  savedItems = JSON.parse(response);
 
 try {
   if (id){
     console.log(id)
-     savedItems = JSON.parse(response);
+     
       const index = await savedItems.findIndex(item => item.id === id);
       savedItems[index] = data;
       console.log('deu  certo')
@@ -73,9 +72,11 @@ try {
     }
 
     else{
-     savedItems = JSON.parse(response);
-    savedItems.push(data);
-    await AsyncStorage.setItem('items', JSON.stringify(savedItems));
+    
+    savedItems=[...savedItems,data];
+    console.log(savedItems)
+    await AsyncStorage.setItem('items', JSON.stringify(savedItems)).then(response=>navigation.navigate('Detalhes',data));
+
     setinformacao('');
     setname('');
     setpopular('');
@@ -88,6 +89,7 @@ try {
     }
 
   }
+
 function  reset(){
   setinformacao('');
   setname('');
@@ -134,7 +136,7 @@ function  reset(){
        <TouchableOpacity onPress={()=>geo()} style={styles.button}><Text style={styles.text}>Pegar Localiacao </Text></TouchableOpacity>
        </View>
        <View style={styles.button2}>
-        <TouchableOpacity onPress={()=>heads(data,id)} style={styles.button3} ><Text style={styles.text}>Salvar</Text></TouchableOpacity>
+        <TouchableOpacity onPress={()=>heads()} style={styles.button3} ><Text style={styles.text}>Salvar</Text></TouchableOpacity>
         <TouchableOpacity onPress={()=>reset()} style={{backgroundColor:'red',marginRight:40,borderRadius:8,marginLeft:40,alignItems:'center',borderWidth:1,justifyContent:'center',borderColor:'#737380',height:30,width:70,}}><Text style={styles.text}>Reset</Text></TouchableOpacity>
        </View>
        <View style={{alignItems:'center'}}>
@@ -163,7 +165,7 @@ const styles = StyleSheet.create({
      width: 250,
      borderRadius:8,
      borderColor: '#737380', 
-     borderWidth: 1,
+     borderWidth: 0.5,
      alignSelf:'center',
      marginTop:10,
      marginLeft:10,
@@ -171,7 +173,7 @@ const styles = StyleSheet.create({
    },
    button:{
      height:40,
-     borderWidth:1,
+     borderWidth:0.5,
      borderColor:'#737380' ,
      backgroundColor:'#453775',
      alignSelf:'center',
@@ -207,7 +209,7 @@ const styles = StyleSheet.create({
     borderRadius:8,
     marginLeft:40,
     alignItems:'center',
-    borderWidth:1,
+    borderWidth:0.5,
     justifyContent:'center',
     borderColor:'#737380',
     height:30,

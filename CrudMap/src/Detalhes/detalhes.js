@@ -8,9 +8,9 @@ import {useNavigation,useRoute} from '@react-navigation/native';
 export default function App() {
   const navigation = useNavigation();
   const route = useRoute();
- 
-const [items, setItems] = useState('');
-
+  const router = route.params;
+const [items, setItems] = useState([]);
+console.log(items)
  async function getItems(){
       return AsyncStorage.getItem('items')
               .then(response => {
@@ -26,10 +26,11 @@ const [items, setItems] = useState('');
   }
   
 
-  
+
  useEffect(()=>{
   getItems().then(items => setItems(items));
- },[route,createTwoButtonAlert])
+   
+ },[createTwoButtonAlert,clear])
 
 const createTwoButtonAlert = () =>{
 return Alert.alert(
@@ -52,9 +53,11 @@ async function clear(id){
    let savedItems = await getItems();
    const index = await savedItems.find(item => item.id === id);
    savedItems.splice(index, 1);
+
    return AsyncStorage.setItem('items', JSON.stringify(savedItems));
    
   }
+  getItems();
  
 }
 
