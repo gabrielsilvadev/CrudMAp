@@ -13,7 +13,7 @@ export  default function Principal(){
   const [informacao,setinformacao]=useState('');
   const [latitude, setlatitude] = useState(null);
   const [longitude, setlongitude] = useState(null);
-
+  console.log(name)
   const navigation = useNavigation();
   const route =useRoute();
   const id = route.params ? route.params.id : undefined;
@@ -41,21 +41,22 @@ export  default function Principal(){
     console.log(location.coords.latitude);
  
   }
-async function heads(){
-    
-const data={
-  name,
-  namepopular,
-  informacao,
-  latitude,
-  longitude
-}
+  const data={
+    name,
+    namepopular,
+    informacao,
+    latitude,
+    longitude
+  }
+  
+async function heads(data,id){
+   console.log(data) 
+
   data.id = id ? id : new Date().getTime();
   let savedItems=[]
   const response = await AsyncStorage.getItem('items');
   savedItems = JSON.parse(response);
 
-try {
   if (id){
     console.log(id)
      
@@ -68,25 +69,20 @@ try {
       setpopular('');
       setlongitude(null);
       setlatitude(null);
-      navigation.navigate('Detalhes');
+     
     }
 
     else{
     
     savedItems=[...savedItems,data];
     console.log(savedItems)
-    await AsyncStorage.setItem('items', JSON.stringify(savedItems)).then(response=>navigation.navigate('Detalhes',data));
-
+    await AsyncStorage.setItem('items', JSON.stringify(savedItems))
     setinformacao('');
     setname('');
     setpopular('');
     setlongitude(null);
     setlatitude(null);
      }
-    }
-    catch(error){
-     console.log(error)
-    }
 
   }
 
@@ -110,24 +106,28 @@ function  reset(){
       <TextInput placeholder='Nome Popular'
       autoCorrect={true}
        maxLength={40}
-       value={namepopular}
-       onChange={e =>setpopular(e.target.value)}
+       onChangeText={text =>setname(text)}
+       value={name}
+       
        style={styles.input}/>
 
      <TextInput  placeholder='Nome cientifico' 
       autoCorrect={true}
        maxLength={40}
-       value={name}
-       onChange={e =>setname(e.target.value)}
+       onChangeText={text =>setpopular(text)}
+       value={namepopular}
        style={styles.input}/>
 
        <TextInput placeholder='Outras.Infor'
        autoCorrect={true}
-       value={informacao}
+     
        maxLength={200}
        multiline={true}
-       onChange={e =>setinformacao(e.target.value)}
-        style={styles.input}/>
+      
+        style={styles.input}
+          onChangeText={text =>setinformacao(text)}
+          value={informacao}
+          />
       </View>
        <View style={{backgroundColor:'#04d361',borderWidth:1,borderRadius:6,         borderColor:'#737380',padding:20,shadowColor:'#737380',shadowOpacity:5,shadowRadius:2,shadowOffset:{height:2,width:2,}}} elevation={50}>
   <Text style={styles.text}>Latitude:{latitude}</Text>
@@ -136,7 +136,7 @@ function  reset(){
        <TouchableOpacity onPress={()=>geo()} style={styles.button}><Text style={styles.text}>Pegar Localiacao </Text></TouchableOpacity>
        </View>
        <View style={styles.button2}>
-        <TouchableOpacity onPress={()=>heads()} style={styles.button3} ><Text style={styles.text}>Salvar</Text></TouchableOpacity>
+        <TouchableOpacity onPress={()=>heads(data,id)} style={styles.button3} ><Text style={styles.text}>Salvar</Text></TouchableOpacity>
         <TouchableOpacity onPress={()=>reset()} style={{backgroundColor:'red',marginRight:40,borderRadius:8,marginLeft:40,alignItems:'center',borderWidth:1,justifyContent:'center',borderColor:'#737380',height:30,width:70,}}><Text style={styles.text}>Reset</Text></TouchableOpacity>
        </View>
        <View style={{alignItems:'center'}}>

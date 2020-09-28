@@ -9,33 +9,33 @@ export default function App() {
   const navigation = useNavigation();
   const route = useRoute();
   const router = route.params;
-const [items, setItems] = useState([]);
+const [items, setItems] = useState('');
 console.log(items)
  async function getItems(){
-      return AsyncStorage.getItem('items')
-              .then(response => {
+      const response = AsyncStorage.getItem('items');
                   if(response){
+                  
+                     setItems(...items,response)
                      
-                      return Promise.resolve(JSON.parse(response));
+                    console.log(response)
                     }
                 
                   else{
-                      return Promise.resolve([]);
+                      setItems([]);
                   }
-              })
   }
   
 
 
  useEffect(()=>{
-  getItems().then(items => setItems(items));
+  getItems()
    
- },[createTwoButtonAlert,clear])
+ },[])
 
 const createTwoButtonAlert = () =>{
 return Alert.alert(
-  "Alert Title",
-  "My Alert Msg",
+  "ATENCAO",
+  "Tem Certeza Que Deseja Deletar?",
   [
     {
       text: "Cancel",
@@ -78,7 +78,7 @@ function send(){
     <FlatList
      data={items}
      keyExtractor={dado=>String(dado.id)}
-     showsHorizontalScrollIndicator={false}
+     
      renderItem={({item:dado})=>(
        <View  style={{  marginBottom:15,
          padding:15,
