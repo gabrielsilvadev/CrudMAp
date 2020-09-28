@@ -15,6 +15,7 @@ console.log(items)
       const response = AsyncStorage.getItem('items');
                   if(response){
                   
+                    
                      setItems(...items,response)
                      
                     console.log(response)

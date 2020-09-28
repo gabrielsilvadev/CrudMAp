@@ -110,7 +110,7 @@ function  reset(){
        value={name}
        
        style={styles.input}/>
-
+ 
      <TextInput  placeholder='Nome cientifico' 
       autoCorrect={true}
        maxLength={40}
