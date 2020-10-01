@@ -63,7 +63,50 @@ async function clear(id){
  
 }
 
-
+const Item = ({ item, onPress,View,Text,TouchableOpacity,MaterialIcons}) => (
+  <View  style={{  marginBottom:15,
+    padding:15,
+    borderRadius:4,
+    backgroundColor:'#04d361',
+    display:'flex',
+    flex:1,
+    flexDirection:'row',
+    borderWidth:1,
+    borderColor:'#737380',
+    alignItems:'center',
+    shadowColor:'#737380',
+    shadowOpacity:5,
+    shadowRadius:2,
+    justifyContent:'space-between',
+    shadowOffset: {height:2,width:2}}}>
+  <View ><Text style={styles.text}>Name: {item.name}</Text>
+   <Text style={styles.text}>Namepopular: {item.namepopular}</Text>
+   <Text style={styles.text}>Informacoes: {item.informacao}</Text>
+   <Text style={styles.text}>Latitude: {item.latitude}</Text>
+   <Text style={styles.text}>Longitude: {item.longitude}</Text>
+   </View>
+   <View >
+   <TouchableOpacity  >
+    <MaterialIcons
+    name="delete-forever"
+    size={30}
+    onPress={()=>clear(dado.id)}
+    color='red'
+    />
+    </TouchableOpacity>
+    <TouchableOpacity>
+    <MaterialIcons
+    name="edit"
+    size={30}
+    onPress={()=>edition(dado.id,items)}
+    color='blue'
+    />
+    </TouchableOpacity>
+  
+  </View>
+  </View>
+ 
+);
 
 async function edition(id,items){
   const index = await items.find(item => item.id === id);
@@ -82,48 +125,7 @@ function send(){
      data={items}
      keyExtractor={dado=>String(dado.id)}
      renderItem={({item})=>(
-       <View  style={{  marginBottom:15,
-         padding:15,
-         borderRadius:4,
-         backgroundColor:'#04d361',
-         display:'flex',
-         flex:1,
-         flexDirection:'row',
-         borderWidth:1,
-         borderColor:'#737380',
-         alignItems:'center',
-         shadowColor:'#737380',
-         shadowOpacity:5,
-         shadowRadius:2,
-         justifyContent:'space-between',
-         shadowOffset: {height:2,width:2}}}>
-       <View ><Text style={styles.text}>Name: {item.name}</Text>
-        <Text style={styles.text}>Namepopular: {item.namepopular}</Text>
-        <Text style={styles.text}>Informacoes: {item.informacao}</Text>
-        <Text style={styles.text}>Latitude: {item.latitude}</Text>
-        <Text style={styles.text}>Longitude: {item.longitude}</Text>
-        </View>
-        <View >
-        <TouchableOpacity  >
-         <MaterialIcons
-         name="delete-forever"
-         size={30}
-         onPress={()=>clear(dado.id)}
-         color='red'
-         />
-         </TouchableOpacity>
-         <TouchableOpacity>
-         <MaterialIcons
-         name="edit"
-         size={30}
-         onPress={()=>edition(dado.id,items)}
-         color='blue'
-         />
-         </TouchableOpacity>
-       
-       </View>
-       </View>
-      
+     
      )}
     />
  </SafeAreaView>
