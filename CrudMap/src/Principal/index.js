@@ -20,6 +20,7 @@ export  default function Principal(){
   const id = route.params ? route.params.id : undefined;
 
   
+  
   useEffect(() => {
     if(!route.params) return;
     setname(route.params.name);
@@ -35,7 +36,7 @@ export  default function Principal(){
     if (status !== 'granted') {
       setErrorMsg('Permission to access location was denied');
     }
-    
+
 
     let location = await Location.getCurrentPositionAsync({});
     setlatitude(location.coords.latitude);

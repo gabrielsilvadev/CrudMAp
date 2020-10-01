@@ -9,6 +9,7 @@ import Detalhes,{goBack} from './Detalhes/detalhes';
 import Logo from '../assets/icon.png';
 import Confirmacao from './Confirmacao/confirm';
 
+
 const  AppStack = createStackNavigator();
 
 export default function Routes(){

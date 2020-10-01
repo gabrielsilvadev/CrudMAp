@@ -20,11 +20,11 @@ useEffect(()=>{
 },[]);
  function sendEmail(){
    MailComposer.composeAsync({
-     subject:'Geolocalizacao de arvores',
-     recipients:email,
+     subject:'Geolocalizacao de arvores',     recipients:email,
      body: dados
    })
  }
+ 
  function goBack(){
   navigation.goBack();
 }
