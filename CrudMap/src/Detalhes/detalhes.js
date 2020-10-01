@@ -1,5 +1,5 @@
 import React,{useState,useEffect} from 'react';
-import { Text,FlatList,View, StyleSheet,TouchableOpacity,Alert,AsyncStorage} from 'react-native';
+import { Text,FlatList,View, StyleSheet,SafeAreaView,TouchableOpacity,Alert,AsyncStorage} from 'react-native';
 import { Feather } from '@expo/vector-icons';
 import Constants from 'expo-constants';
 
@@ -9,29 +9,30 @@ export default function App() {
   const navigation = useNavigation();
   const route = useRoute();
   const router = route.params;
-const [items, setItems] = useState('');
+const [items, setItems] = useState(['']);
 console.log(items)
  async function getItems(){
-      const response = AsyncStorage.getItem('items');
-                  if(response){
-                  
+     return AsyncStorage.getItem('items')
+                 .then(response=>{ 
+                   if(response)
                     
-                     setItems(...items,response)
+                   return Promise.resolve(JSON.parse(response));
                      
-                    console.log(response)
-                    }
-                
-                  else{
-                      setItems([]);
-                  }
-  }
+              
+                  else
+                    return  Promise.resolve([]);
+  
+                  
+                 })
+  }             
+
   
 
 
  useEffect(()=>{
-  getItems()
+  getItems().then(item => setItems(item));
    
- },[])
+ },[route])
 
 const createTwoButtonAlert = () =>{
 return Alert.alert(
@@ -76,11 +77,11 @@ function send(){
     <View style={styles.container}>
       
 <View style={{justifyContent:'space-between'}}>
+    <SafeAreaView>
     <FlatList
      data={items}
      keyExtractor={dado=>String(dado.id)}
-     
-     renderItem={({item:dado})=>(
+     renderItem={({item})=>(
        <View  style={{  marginBottom:15,
          padding:15,
          borderRadius:4,
@@ -96,11 +97,11 @@ function send(){
          shadowRadius:2,
          justifyContent:'space-between',
          shadowOffset: {height:2,width:2}}}>
-       <View ><Text style={styles.text}>Name: {dado.name}</Text>
-        <Text style={styles.text}>Namepopular: {dado.namepopular}</Text>
-        <Text style={styles.text}>Informacoes: {dado.informacao}</Text>
-        <Text style={styles.text}>Latitude: {dado.latitude}</Text>
-        <Text style={styles.text}>Longitude: {dado.longitude}</Text>
+       <View ><Text style={styles.text}>Name: {item.name}</Text>
+        <Text style={styles.text}>Namepopular: {item.namepopular}</Text>
+        <Text style={styles.text}>Informacoes: {item.informacao}</Text>
+        <Text style={styles.text}>Latitude: {item.latitude}</Text>
+        <Text style={styles.text}>Longitude: {item.longitude}</Text>
         </View>
         <View >
         <TouchableOpacity  >
@@ -125,7 +126,7 @@ function send(){
       
      )}
     />
- 
+ </SafeAreaView>
     </View>
     <View  style={{flex:1,padding:20,height:600,display:'flex'}}>
  

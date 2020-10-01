@@ -13,7 +13,7 @@ export  default function Principal(){
   const [informacao,setinformacao]=useState('');
   const [latitude, setlatitude] = useState(null);
   const [longitude, setlongitude] = useState(null);
-  console.log(name)
+
   const navigation = useNavigation();
   const route =useRoute();
   const id = route.params ? route.params.id : undefined;
@@ -75,7 +75,7 @@ async function heads(data,id){
     else{
     
     savedItems=[...savedItems,data];
-    console.log(savedItems)
+  
     await AsyncStorage.setItem('items', JSON.stringify(savedItems))
     setinformacao('');
     setname('');
