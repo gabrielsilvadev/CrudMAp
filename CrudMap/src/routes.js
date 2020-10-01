@@ -21,6 +21,7 @@ export default function Routes(){
         style={{ width: 300, height: 150 ,marginLeft:-70}}
         source={Logo}
         resizeMode='contain'
+        
       />
     ),
     headerTitleStyle: { flex: 1, textAlign: 'center' },

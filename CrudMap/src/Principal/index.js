@@ -14,6 +14,7 @@ export  default function Principal(){
   const [latitude, setlatitude] = useState(null);
   const [longitude, setlongitude] = useState(null);
 
+  
   const navigation = useNavigation();
   const route =useRoute();
   const id = route.params ? route.params.id : undefined;
