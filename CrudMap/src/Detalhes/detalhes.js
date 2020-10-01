@@ -8,7 +8,7 @@ import {useNavigation,useRoute} from '@react-navigation/native';
 export default function App() {
   const navigation = useNavigation();
   const route = useRoute();
-  const router = route.params;
+ 
 const [items, setItems] = useState(['']);
 console.log(items)
  async function getItems(){

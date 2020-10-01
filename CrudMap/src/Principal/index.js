@@ -14,7 +14,7 @@ export  default function Principal(){
   const [latitude, setlatitude] = useState(null);
   const [longitude, setlongitude] = useState(null);
 
-  
+
   const navigation = useNavigation();
   const route =useRoute();
   const id = route.params ? route.params.id : undefined;
@@ -35,6 +35,7 @@ export  default function Principal(){
     if (status !== 'granted') {
       setErrorMsg('Permission to access location was denied');
     }
+    
 
     let location = await Location.getCurrentPositionAsync({});
     setlatitude(location.coords.latitude);
