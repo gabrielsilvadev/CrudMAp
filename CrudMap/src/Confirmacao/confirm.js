@@ -4,38 +4,45 @@ import Constants from 'expo-constants';
 import AsyncStorage from '@react-native-community/async-storage';
 
 import * as MailComposer from 'expo-mail-composer';
-import  { useNavigation} from '@react-navigation/native';
+
 
 export default function App() {
- const navigation=useNavigation();
 
- const [email,setEmail]=useState('');
+
+const [email,setEmail]=useState('');
 const [dados,setdados]=useState(['']);
+
+console.log(dados)
   async function load(){
    const date =  await  AsyncStorage.getItem('items');
-    setdados(date);
+    
+   console.log(date)
+    setdados(JSON.parse(date));
 }
 useEffect(()=>{
   load();
 },[]);
  function sendEmail(){
    MailComposer.composeAsync({
-     subject:'Geolocalizacao de arvores',     recipients:email,
-     body: dados
+     subject:'Geolocalizacao de arvores',   
+     recipients:[email],
+     isHtml: <View ><Text >Name: {dados.name}</Text>
+     <Text >Namepopular: {dados.namepopular}</Text>
+     <Text >Informacoes: {dados.informacao}</Text>
+     <Text >Latitude: {dados.latitude}</Text>
+     <Text >Longitude: {dados.longitude}</Text></View>
    })
  }
  
- function goBack(){
-  navigation.goBack();
-}
+
   return (
     <KeyboardAvoidingView
     behavior={Platform.OS == "ios" ? "padding" : "height"}style={{flex:1}}>
     <View style={styles.container}>
      <TextInput placeholder='Email'
        autoCorrect={true}
+       onChangeText={text=>setEmail(text)}
        value={email}
-       onChange={e=>setEmail(e.target.value)}
        maxLength={50}
        style={styles.input}/>
         <View style={{alignItems:'center'}}>
