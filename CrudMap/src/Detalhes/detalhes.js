@@ -1,17 +1,19 @@
 import React,{useState,useEffect} from 'react';
-import { Text,FlatList,View, StyleSheet,SafeAreaView,TouchableOpacity,Alert,AsyncStorage} from 'react-native';
-
+import { Text,ScrollView,View, StyleSheet,TouchableOpacity,Alert,AsyncStorage} from 'react-native';
+import AppItem from './Listitem';
 import Constants from 'expo-constants';
 
-import { MaterialIcons} from '@expo/vector-icons';
+
 import {useNavigation,useRoute} from '@react-navigation/native';
-export default function App() {
+export default function App(props) {
   const navigation = useNavigation();
   const route = useRoute();
+  const parametros=route.params;
+
  
-const [items, setItems] = useState(['']);
-console.log(items)
- async function getItems(){
+const [items, setItems] = useState([]);
+
+ async function getItems(){   
      return AsyncStorage.getItem('items')
                  .then(response=>{ 
                    if(response)
@@ -25,14 +27,10 @@ console.log(items)
                   
                  })
   }             
-
-  
-
-
  useEffect(()=>{
   getItems().then(item => setItems(item));
-   
- },[route])
+
+ },[parametros])
 
 const createTwoButtonAlert = () =>{
 return Alert.alert(
@@ -59,15 +57,7 @@ async function clear(id){
    return AsyncStorage.setItem('items', JSON.stringify(savedItems));
    
   }
-  getItems();
- 
-}
 
-
-
-async function edition(id,items){
-  const index = await items.find(item => item.id === id);
-  navigation.navigate("Principal", index);
 }
 
 function send(){
@@ -77,61 +67,15 @@ function send(){
     <View style={styles.container}>
       
 <View style={{justifyContent:'space-between'}}>
-    <SafeAreaView>
-    <FlatList
-     data={items}
-     keyExtractor={dado=>String(dado.id)}
-     renderItem={({item})=>(
-      <View  style={{  marginBottom:15,
-        padding:15,
-        borderRadius:4,
-        backgroundColor:'#04d361',
-        display:'flex',
-        flex:1,
-        flexDirection:'row',
-        borderWidth:1,
-        borderColor:'#737380',
-        alignItems:'center',
-        shadowColor:'#737380',
-        shadowOpacity:5,
-        shadowRadius:2,
-        justifyContent:'space-between',
-        shadowOffset: {height:2,width:2}}}>
-      <View ><Text style={styles.text}>Name: {item.name}</Text>
-       <Text style={styles.text}>Namepopular: {item.namepopular}</Text>
-       <Text style={styles.text}>Informacoes: {item.informacao}</Text>
-       <Text style={styles.text}>Latitude: {item.latitude}</Text>
-       <Text style={styles.text}>Longitude: {item.longitude}</Text>
-       </View>
-       <View >
-       <TouchableOpacity  >
-        <MaterialIcons
-        name="delete-forever"
-        size={30}
-        onPress={()=>clear(item.id)}
-        color='red'
-        />
-        </TouchableOpacity>
-        <TouchableOpacity>
-        <MaterialIcons
-        name="edit"
-        size={30}
-        onPress={()=>edition(item.id,items)}
-        color='blue'
-        />
-        </TouchableOpacity>
-      
-      </View>
-      </View>
-     
-     )}
-    />
- </SafeAreaView>
+    <ScrollView 
+        style={styles.scrollContainer}
+        contentContainerStyle={styles.itemsContainer}>
+        { items.map(item => {
+            return <AppItem key={item.id} id={item.id} item={`Name: ${item.name} NamePopular: ${item.namepopular} Latitude: ${item.latitude} Longitude: ${item.longitude}`} />
+        }) }
+    </ScrollView>
     </View>
-    <View  style={{flex:1,padding:20,height:600,display:'flex'}}>
- 
-          </View>
-
+   
     <TouchableOpacity  style={{ height:40,
      borderWidth:1,
      borderColor:'#737380' ,
@@ -164,7 +108,27 @@ const styles = StyleSheet.create({
   text:{
     color:'white',
     fontSize:15,
+    alignItems:'center',
+    alignSelf:'center',
     fontWeight:'bold',
+  },
+  flatlist:{
+    marginBottom:15,
+    padding:15,
+    borderRadius:4,
+    height: 100,
+    backgroundColor:'#04d361',
+    
+    flex:1,
+    flexDirection:'row',
+    borderWidth:1,
+    borderColor:'#737380',
+    alignItems:'center',
+    shadowColor:'#737380',
+    shadowOpacity:5,
+    shadowRadius:2,
+    justifyContent:'space-between',
+    shadowOffset: {height:2,width:2}
   }
 });
 
