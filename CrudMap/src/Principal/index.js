@@ -29,7 +29,7 @@ export  default function Principal(){
     setlatitude(route.params.latitude);
     setlongitude(route.params.longitude);
    
-  }, [route])
+  }, [route,id])
 
   async function geo(){
     let { status } = await Location.requestPermissionsAsync();

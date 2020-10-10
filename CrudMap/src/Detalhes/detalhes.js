@@ -9,9 +9,14 @@ export default function App(props) {
   const navigation = useNavigation();
   const route = useRoute();
   const parametros=route.params;
-
+  const item =route.params
+  console.log(item)
  
 const [items, setItems] = useState([]);
+
+
+
+
 
  async function getItems(){   
      return AsyncStorage.getItem('items')
@@ -87,7 +92,7 @@ function send(){
      width: 200,
      alignItems:'center',
      justifyContent:'center'}}
-     onPress={send}>
+     onPress={()=>send()}>
     <Text style={styles.text}>Enviar</Text>
     </TouchableOpacity>
 

@@ -5,7 +5,7 @@ import   {createStackNavigator} from '@react-navigation/stack';
 
 
 import Principal from './Principal/index';
-import Detalhes,{goBack} from './Detalhes/detalhes';
+import Detalhes from './Detalhes/detalhes';
 import Logo from '../assets/icon.png';
 import Confirmacao from './Confirmacao/confirm';
 

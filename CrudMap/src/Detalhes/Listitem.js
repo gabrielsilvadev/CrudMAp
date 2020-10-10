@@ -1,21 +1,22 @@
 
 import React from 'react';
-import {StyleSheet, Text, View, TouchableOpacity} from 'react-native';
+import {StyleSheet, Text, View, TouchableOpacity,AsyncStorage} from 'react-native';
 import { MaterialIcons} from '@expo/vector-icons';
-
+import Detalhes from './detalhes'
 import {useNavigation,useRoute} from '@react-navigation/native';
 
 
 export default function AppItem(props){
    const route =useRoute()
    const navigation =useNavigation();
+   const items=props.item
+   console.log(items)
 
-  async function edition(id,props){
-    const item=props.item
-    const index = await item.find(item => item.id === id);
+   async function edition(name,items){
+    console.log(name)
+    const index = await items.find(item => item.name === name);
     navigation.navigate("Principal", index);
   }
-  
   
   return (
        <View style={{ justifyContent: 'center',
@@ -30,7 +31,7 @@ export default function AppItem(props){
             <TouchableOpacity style={styles.buttondel} > 
                 <MaterialIcons name='delete' size={30} color='red'/>
             </TouchableOpacity> 
-            <TouchableOpacity onPress={()=>edition(props.id,props)} style={styles.buttonEdit}> 
+            <TouchableOpacity onPress={()=>edition(props.item.name,items)} style={styles.buttonEdit}> 
                 <MaterialIcons name='create' size={30} color='blue'/> 
             </TouchableOpacity> 
           </View>
