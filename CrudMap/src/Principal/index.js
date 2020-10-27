@@ -53,7 +53,7 @@ export  default function Principal(){
   }
   
 async function heads(data,id){
-   console.log(data) 
+   
 
   data.id = id ? id : new Date().getTime();
   let savedItems=[]

@@ -1,20 +1,25 @@
 import React,{useState,useEffect} from 'react';
-import { Text,ScrollView,View, StyleSheet,TouchableOpacity,Alert,AsyncStorage} from 'react-native';
-import AppItem from './Listitem';
+import { Text,FlatList,View, StyleSheet,TouchableOpacity,Alert,AsyncStorage} from 'react-native';
+import { MaterialIcons} from '@expo/vector-icons';
 import Constants from 'expo-constants';
 
 
 import {useNavigation,useRoute} from '@react-navigation/native';
-export default function App(props) {
+
+export default function App() {
   const navigation = useNavigation();
   const route = useRoute();
   const parametros=route.params;
-  const item =route.params
-  console.log(item)
  
-const [items, setItems] = useState([]);
+ 
+const [items, setItems] = (useState([]));
 
 
+
+async function edition(id,items){
+  const index = await items.find(item => item.id === id);
+  navigation.navigate("Principal", index);
+}
 
 
 
@@ -31,11 +36,12 @@ const [items, setItems] = useState([]);
   
                   
                  })
-  }             
- useEffect(()=>{
-  getItems().then(item => setItems(item));
+  } 
 
- },[parametros])
+ useEffect(()=>{
+  getItems().then(item => setItems(new Array(item)));
+
+ },[parametros,clear])
 
 const createTwoButtonAlert = () =>{
 return Alert.alert(
@@ -52,6 +58,7 @@ return Alert.alert(
   { cancelable: false }
 );
 }
+
 async function clear(id){
   await createTwoButtonAlert();
   if(createTwoButtonAlert){
@@ -62,24 +69,37 @@ async function clear(id){
    return AsyncStorage.setItem('items', JSON.stringify(savedItems));
    
   }
-
+  
 }
-
 function send(){
   navigation.navigate('Confirmacao');
 }
   return (
+    
     <View style={styles.container}>
-      
-<View style={{justifyContent:'space-between'}}>
-    <ScrollView 
-        style={styles.scrollContainer}
-        contentContainerStyle={styles.itemsContainer}>
-        { items.map(item => {
-            return <AppItem key={item.id} id={item.id} item={`Name: ${item.name} NamePopular: ${item.namepopular} Latitude: ${item.latitude} Longitude: ${item.longitude}`} />
-        }) }
-    </ScrollView>
-    </View>
+
+  
+      <FlatList data={items}  keyExtractor={item => String(item.id)} renderItem ={ ({item}) =>(
+        <View style={styles.box}>
+          
+          <Text style={styles.text}>Name: {item.name}</Text>
+          <Text  style={styles.text}>Name Cientifico: {item.namepopular}</Text>
+          <Text  style={styles.text}>Informacoes: {item.informacao}</Text>
+          <Text  style={styles.text}>Latitude: {item.latitude}</Text>
+          <Text style={styles.text}>Longitude: {item.longitude}</Text>
+
+         
+         <TouchableOpacity style={{alignContent:'center',marginTop:-50}}> 
+            <MaterialIcons name='delete' onPress={()=>clear(item.id)} size={30} color='red'/>
+            </TouchableOpacity> 
+            <TouchableOpacity onPress={()=>edition(item.id,items)} > 
+                <MaterialIcons name='create' size={30} color='blue'/> 
+            </TouchableOpacity> 
+            
+         </View>
+       
+      )} />
+    
    
     <TouchableOpacity  style={{ height:40,
      borderWidth:1,
@@ -107,21 +127,19 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
      paddingTop: Constants.statusBarHeight,
     backgroundColor: '#ecf0f1',
+   
     paddingHorizontal:24,
     padding: 8,
   },
   text:{
     color:'white',
     fontSize:15,
-    alignItems:'center',
-    alignSelf:'center',
     fontWeight:'bold',
   },
   flatlist:{
-    marginBottom:15,
+    marginBottom:20,
     padding:15,
     borderRadius:4,
-    height: 100,
     backgroundColor:'#04d361',
     
     flex:1,
@@ -132,9 +150,29 @@ const styles = StyleSheet.create({
     shadowColor:'#737380',
     shadowOpacity:5,
     shadowRadius:2,
-    justifyContent:'space-between',
+   
     shadowOffset: {height:2,width:2}
-  }
+  },
+  box:{
+  marginBottom:15,
+  padding:5,
+  borderRadius:4,
+  alignContent:'space-between',
+  backgroundColor:'#04d361',
+  height:40,
+  borderWidth:1,
+  
+  flex:1,
+  borderColor:'#737380',
+  
+  shadowColor:'#737380',
+  shadowOpacity:5,
+  shadowRadius:2,
+  
+  
+  shadowOffset: {height:2,width:2}
+  },
+ 
 });
 
 export function goBack(){

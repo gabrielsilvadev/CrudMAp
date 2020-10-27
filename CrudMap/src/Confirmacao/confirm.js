@@ -1,5 +1,5 @@
 import  React,{useState,useEffect}from 'react';
-import { Text, View,StyleSheet ,TextInput,KeyboardAvoidingView,Platform,TouchableOpacity} from 'react-native';
+import { Text, View,StyleSheet ,TextInput,KeyboardAvoidingView,Platform,TouchableOpacity,FlatList} from 'react-native';
 import Constants from 'expo-constants';
 import AsyncStorage from '@react-native-community/async-storage';
 
@@ -8,30 +8,31 @@ import * as MailComposer from 'expo-mail-composer';
 
 export default function App() {
 
-
 const [email,setEmail]=useState('');
 const [dados,setdados]=useState(['']);
 
-console.log(dados)
+
   async function load(){
    const date =  await  AsyncStorage.getItem('items');
-    
-   console.log(date)
     setdados(JSON.parse(date));
 }
 useEffect(()=>{
   load();
 },[]);
- function sendEmail(){
+ function sendEmail(dados){
    MailComposer.composeAsync({
      subject:'Geolocalizacao de arvores',   
      recipients:[email],
-     isHtml: <View ><Text >Name: {dados.name}</Text>
-     <Text >Namepopular: {dados.namepopular}</Text>
-     <Text >Informacoes: {dados.informacao}</Text>
-     <Text >Latitude: {dados.latitude}</Text>
-     <Text >Longitude: {dados.longitude}</Text></View>
-   })
+     isHtml:<FlatList data={dados}  keyExtractor={item => String(item.id)} renderItem ={ ({item}) =>(
+        <View>
+        <Text style={styles.text}>Name: {item.name}</Text>
+        <Text  style={styles.text}>Name Cientifico: {item.namepopular}</Text>
+        <Text  style={styles.text}>Informacoes: {item.informacao}</Text>
+        <Text  style={styles.text}>Latitude: {item.latitude}</Text>
+        <Text style={styles.text}>Longitude: {item.longitude}</Text>
+        </View>
+     )}/> 
+  })
  }
  
 
@@ -46,7 +47,7 @@ useEffect(()=>{
        maxLength={50}
        style={styles.input}/>
         <View style={{alignItems:'center'}}>
-       <TouchableOpacity onPress={()=>sendEmail()}style={styles.button}><Text style={styles.text}>Confirmar </Text></TouchableOpacity>
+       <TouchableOpacity onPress={()=>sendEmail(dados)}style={styles.button}><Text style={styles.text}>Confirmar </Text></TouchableOpacity>
        </View>
     </View>
     </KeyboardAvoidingView>
