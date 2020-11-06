@@ -18,8 +18,8 @@ export  default function Principal(){
   const navigation = useNavigation();
   const route =useRoute();
   const id = route.params ? route.params.id : undefined;
-
   
+ 
   
   useEffect(() => {
     if(!route.params) return;
@@ -60,7 +60,7 @@ async function heads(data,id){
   const response = await AsyncStorage.getItem('items');
   savedItems = JSON.parse(response);
 
-  if (id){
+  if (route.params ? route.params.id : undefined){
     console.log(id)
      
       const index = await savedItems.findIndex(item => item.id === id);
@@ -72,6 +72,7 @@ async function heads(data,id){
       setpopular('');
       setlongitude(null);
       setlatitude(null);
+      
      
     }
 
@@ -132,11 +133,11 @@ function  reset(){
           value={informacao}
           />
       </View>
-       <View style={{backgroundColor:'#04d361',borderWidth:1,borderRadius:6,         borderColor:'#737380',padding:20,shadowColor:'#737380',shadowOpacity:5,shadowRadius:2,shadowOffset:{height:2,width:2,}}} elevation={50}>
+       <View style={{backgroundColor:'#04d361',borderWidth:1,borderRadius:6,borderColor:'#737380',padding:20,shadowColor:'#737380',shadowOpacity:5,shadowRadius:2,shadowOffset:{height:2,width:2,}}} elevation={50}>
   <Text style={styles.text}>Latitude:{latitude}</Text>
   <Text style={styles.text}>Longitude:{longitude}</Text>
        
-       <TouchableOpacity onPress={()=>geo()} style={styles.button}><Text style={styles.text}>Pegar Localiacao </Text></TouchableOpacity>
+       <TouchableOpacity onPress={()=>geo()} style={styles.button}><Text style={styles.text}>Pegar localizacao </Text></TouchableOpacity>
        </View>
        <View style={styles.button2}>
         <TouchableOpacity onPress={()=>heads(data,id)} style={styles.button3} ><Text style={styles.text}>Salvar</Text></TouchableOpacity>

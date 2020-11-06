@@ -10,7 +10,7 @@ export default function App() {
   const navigation = useNavigation();
   const route = useRoute();
   const parametros=route.params;
- 
+
  
 const [items, setItems] = (useState([]));
 
@@ -39,31 +39,31 @@ async function edition(id,items){
   } 
 
  useEffect(()=>{
-  getItems().then(item => setItems(new Array(item)));
+  getItems().then(item => setItems(item));
 
  },[parametros,clear])
 
-const createTwoButtonAlert = () =>{
+const createTwoButtonAlert = (id) =>{
 return Alert.alert(
   "ATENCAO",
   "Tem Certeza Que Deseja Deletar?",
   [
     {
       text: "Cancel",
-      onPress: () => console.log("Cancel Pressed"),
+      onPress: () => false,
       style: "cancel"
     },
-    { text: "OK", onPress: () => console.log("OK Pressed") }
+    { text: "OK", onPress:() => clear(id) }
   ],
   { cancelable: false }
-);
+  );
 }
 
-async function clear(id){
-  await createTwoButtonAlert();
+function clear(id){
   if(createTwoButtonAlert){
-   let savedItems = await getItems();
-   const index = await savedItems.find(item => item.id === id);
+    console.log(createTwoButtonAlert)
+   let savedItems =  getItems();
+   const index =  savedItems.find(item => item.id === id);
    savedItems.splice(index, 1);
 
    return AsyncStorage.setItem('items', JSON.stringify(savedItems));
@@ -87,12 +87,11 @@ function send(){
           <Text  style={styles.text}>Informacoes: {item.informacao}</Text>
           <Text  style={styles.text}>Latitude: {item.latitude}</Text>
           <Text style={styles.text}>Longitude: {item.longitude}</Text>
-
          
-         <TouchableOpacity style={{alignContent:'center',marginTop:-50}}> 
-            <MaterialIcons name='delete' onPress={()=>clear(item.id)} size={30} color='red'/>
+         <TouchableOpacity style={{marginBottom:6,alignContent:'center',marginTop:-50,alignItems:'center',marginLeft:265}}> 
+            <MaterialIcons name='delete' onPress={()=>createTwoButtonAlert(item.id)} size={30} color='red'/>
             </TouchableOpacity> 
-            <TouchableOpacity onPress={()=>edition(item.id,items)} > 
+            <TouchableOpacity style={{marginBottom:30,alignItems:'center',alignContent:'center',marginTop:'flex',marginLeft:265}} onPress={()=>edition(item.id,items)} > 
                 <MaterialIcons name='create' size={30} color='blue'/> 
             </TouchableOpacity> 
             
@@ -154,15 +153,16 @@ const styles = StyleSheet.create({
     shadowOffset: {height:2,width:2}
   },
   box:{
+  flex:1,
   marginBottom:15,
   padding:5,
   borderRadius:4,
   alignContent:'space-between',
   backgroundColor:'#04d361',
-  height:40,
+  height:150,
   borderWidth:1,
   
-  flex:1,
+  
   borderColor:'#737380',
   
   shadowColor:'#737380',
