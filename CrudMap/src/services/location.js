@@ -6,7 +6,7 @@ export default async function geo(){
       setErrorMsg('Permission to access location was denied');
     }
     else{
-      console.log('permissao negativa')
+      console.log('permissao autorizada')
     }
 
 

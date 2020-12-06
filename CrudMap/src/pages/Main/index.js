@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {View,Text,TextInput,TouchableOpacity} from 'react-native';
 import {style} from './styles';
 import {LinearGradient} from 'expo-linear-gradient';
@@ -11,17 +11,30 @@ export  default function Main(){
 const navigation = useNavigation();
 const route =useRoute();
 
+let id = route.params ? route.params.id : null;
+
+
 const [name,setName] = useState('');
 const [nameCientifico,setNameCientifico] = useState('');
 const [informacoes,setInformacoes] = useState('');
 const [latitude,setlatitude] = useState('');
 const [longitude,setlongitude] = useState('');
 
+useEffect(()=>{
+    if(!route.params) return;
+    setName(route.params.name);
+    setNameCientifico(route.params.nameCientifico);
+    setInformacoes(route.params.informacoes);
+    setlatitude(route.params.latitude);
+    setlongitude(route.params.longitude);
+},[route])
+
 async function getGeo(){
   const geo =  await Geo()
   setlongitude(geo.longitude)
   setlatitude(geo.latitude)
 }
+
 function Delete(){
     setlatitude('');
     setlongitude('');
@@ -31,7 +44,6 @@ function Delete(){
 }
 
 const data ={
-    id: new Date().getTime(),
     name,
     nameCientifico,
     informacoes,
@@ -40,9 +52,14 @@ const data ={
    }
 
 
-async function Save(data){
-console.log(data)
- await createValue(data)
+async function Save(data,id){
+  await createValue(data,id).then
+ (response => navigation.navigate('Detail'))
+    setlatitude(null);
+    setlongitude(null);
+    setName('');
+    setNameCientifico('');
+    setInformacoes('')
 }
 
 
@@ -79,7 +96,7 @@ console.log(data)
         </TouchableOpacity>
     </View>
     <View style={style.box}>
-      <TouchableOpacity onPress={()=>Save(data)} style={style.Save}>
+      <TouchableOpacity onPress={()=>Save(data,id)} style={style.Save}>
           <Text style={style.textBox} >Salva</Text>
           <Feather name="save" size={20} color="white" />
       </TouchableOpacity>

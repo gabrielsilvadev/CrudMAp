@@ -1,14 +1,22 @@
 
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
- export async function createValue(data){
+ export async function createValue(data,id){
      try {
+        data.id = id ? id : new Date().getTime();
         let savedItems=[]
         const response = await AsyncStorage.getItem('data');
         savedItems = JSON.parse(response);
+        if(id){
+          const index = await savedItems.findIndex(item => item.id ===id);
+          savedItems[index]=data;
+          await AsyncStorage.setItem('data',JSON.stringify(savedItems))
+
+        }else{
         savedItems=[...savedItems,data]
         await AsyncStorage.setItem('data',JSON.stringify(savedItems))
         console.log('data created')
+        }
      }catch(e){
        console.log(e)
      }
