@@ -1,59 +1,20 @@
 import React from 'react';
-import {Image,Button} from 'react-native';
-import {NavigationContainer}  from '@react-navigation/native';
-import   {createStackNavigator} from '@react-navigation/stack';
+import {createStackNavigator} from '@react-navigation/stack'
+import {NavigationContainer} from '@react-navigation/native'
+import Main from './pages/Main/index';
+import Detail from './pages/Details/index';
+import Send from './pages/Send/index';
 
-
-import Principal from './Principal/index';
-import Detalhes from './Detalhes/detalhes';
-import Logo from '../assets/icon.png';
-import Confirmacao from './Confirmacao/confirm';
-
-
-const  AppStack = createStackNavigator();
-
-export default function Routes(){
-  return(
-    <NavigationContainer>
-   <AppStack.Navigator >
-     <AppStack.Screen name='Principal' component={Principal}  options={{ 
-     headerTitle: () => ( // App Logo
-      <Image
-        style={{ width: 300, height: 150 ,marginLeft:-70}}
-        source={Logo}
-        resizeMode='contain'
-
-      /> 
-    ),
-    headerTitleStyle: { flex: 1, textAlign: 'center' },
-    }}/>
-     <AppStack.Screen name='Detalhes' component={Detalhes}   options={{ 
-     headerTitle: () => ( // App Logo
-      <Image
-        style={{ width: 300, height: 150 ,marginLeft:-50}}
-        source={Logo}
-        resizeMode='contain'
-       
-      />
-     
-    ),
-    
-    }}/>
-     <AppStack.Screen name='Confirmacao' component={Confirmacao}
-     options={{ 
-      headerTitle: () => ( // App Logo
-       <Image
-         style={{ width: 300,height:150,marginLeft:-50 }}
-         source={Logo}
-         resizeMode='contain'
-       />
-     ),
-     headerTitleStyle: { flex: 1, textAlign: 'center' },
-     }}
-     />
-   </AppStack.Navigator>
+export default function  routes(){
+    const Stack = createStackNavigator();
+    return(
+  <NavigationContainer>
+      <Stack.Navigator screenOptions={{headerShown:false}}>
+        <Stack.Screen name="Main" component={Main} />
+        <Stack.Screen  name='Detail' component={Detail}/>
+        <Stack.Screen  name='Send' component={Send}/>
+      </Stack.Navigator>
     </NavigationContainer>
-  );
-  }
 
-
+    )
+}
