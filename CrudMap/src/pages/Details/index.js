@@ -4,12 +4,17 @@ import {style} from './styles';
 import {LinearGradient} from 'expo-linear-gradient';
 import { Feather,MaterialCommunityIcons,MaterialIcons} from '@expo/vector-icons';
 import {useNavigation} from '@react-navigation/native';
+import {RectButton,BorderlessButton} from 'react-native-gesture-handler'
 import {getData,clear} from '../../services/banco';
+
 export  default function Main(){
 const navigation = useNavigation();
 
 const [data,setData] =useState([]);
+async function NextTo(){
 
+  navigation.navigate('Send',{data})  
+}
 useEffect(()=>{
      getData().then(item => setData(...data,item));
   
@@ -40,11 +45,11 @@ async function  edition(data,id){
  return (
  <View style={style.conteiner}>
      <LinearGradient colors={['#9C07F2','#5204DB']} style={style.gradient}>
-     <MaterialIcons style={style.icon} onPress={()=>{navigation.navigate('Main',{id:null})}} name="keyboard-backspace" size={30} color="white" />
+     <BorderlessButton  style={style.icon} onPress={()=>{navigation.navigate('Main',{id:null})}} ><MaterialIcons  name="keyboard-backspace" size={30} color="white" /></BorderlessButton>
       <FlatList 
       style={style.flatlist} 
       data={data} 
-      keyExtractor={data =>String(data.id)}
+      keyExtractor={item =>String(item.id)}
       renderItem={({item})=>(
       <View style={style.conteinerFlatlist}>
           <View style={style.ConteinerText}>
@@ -55,14 +60,14 @@ async function  edition(data,id){
           <Text style={style.text}>Longitude:{item.longitude}</Text>
           </View>
           <View style={style.ConteinerButton}>
-              <TouchableOpacity onPress={()=>edition(data,item.id)}><Feather name="edit-2" size={32} color="#5204DB" /></TouchableOpacity>
-              <TouchableOpacity onPress={()=>Clear(item.id)}><MaterialCommunityIcons name="delete" size={32} color="#CA2828" /></TouchableOpacity>
+              <RectButton onPress={()=>edition(data,item.id)}><Feather name="edit-2" size={32} color="#5204DB" /></RectButton>
+              <RectButton onPress={()=>Clear(item.id)}><MaterialCommunityIcons name="delete" size={32} color="#CA2828" /></RectButton>
           </View>
       
       </View>
   )}
   />
-  <TouchableOpacity onPress={()=>{navigation.navigate('Send')}} style={style.send}><MaterialIcons name="send" size={40} color="white" /></TouchableOpacity>
+  <RectButton onPress={()=>NextTo()} style={style.send}><MaterialIcons name="send" size={40} color="white" /></RectButton>
    </LinearGradient>  
  </View>
  )

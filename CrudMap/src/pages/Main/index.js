@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react';
-import {View,Text,TextInput,TouchableOpacity} from 'react-native';
+import {View,Text,TextInput} from 'react-native';
 import {style} from './styles';
 import {LinearGradient} from 'expo-linear-gradient';
 import {useRoute,useNavigation} from '@react-navigation/native'
 import {EvilIcons,Feather,Entypo} from '@expo/vector-icons';
 import Geo from '../../services/location';
 import {createValue} from '../../services/banco';
-
+import {RectButton} from 'react-native-gesture-handler'
 export  default function Main(){
 const navigation = useNavigation();
 const route =useRoute();
@@ -71,40 +71,43 @@ async function Save(data,id){
         value={name} 
         placeholder=' Nome ' 
         onChangeText={setName}
+        autoFocus={true}
         autoCorrect={true} 
         style={style.input}/>
         <TextInput
         value={nameCientifico}
+        autoFocus={true}
         onChangeText={setNameCientifico} 
         placeholder=' Nome Cientifico ' 
         autoCorrect={true}  
         style={style.input}/>
         <TextInput 
         value={informacoes}
+        autoFocus={true}
         onChangeText={setInformacoes}
         multiline={true} 
         maxLength={200} 
         placeholder='     Outra.inforamcoes' 
-        autoCorrect={true}  style={style.input}/>
+        autoCorrect={true}  style={[style.input,{height:80}]}/>
     </View>
     <View style={style.conteinerGeo}>
  <Text style={style.text}>Longitude:{latitude}</Text>
  <Text style={style.text}>Latitude:{longitude}</Text>
-        <TouchableOpacity onPress={()=>getGeo()} style={style.buttonGeo}>
+        <RectButton onPress={()=>getGeo()} style={style.buttonGeo}>
             <Text style={style.textButtonGeo}>Pegar localizacao</Text>
              <EvilIcons name="location" style={style.icon}size={30} color="white" />
-        </TouchableOpacity>
+        </RectButton>
     </View>
     <View style={style.box}>
-      <TouchableOpacity onPress={()=>Save(data,id)} style={style.Save}>
+      <RectButton onPress={()=>Save(data,id)} style={style.Save}>
           <Text style={style.textBox} >Salva</Text>
           <Feather name="save" size={20} color="white" />
-      </TouchableOpacity>
-      <TouchableOpacity onPress={()=>Delete()} style={style.Delete}>
+      </RectButton>
+      <RectButton onPress={()=>Delete()} style={style.Delete}>
           <Text style={style.textBox}>Exluir</Text>
-      </TouchableOpacity>
+      </RectButton>
     </View>
-    <TouchableOpacity style={style.Send} onPress={()=>{navigation.navigate('Detail')}}><Entypo name="eye" size={37} color="white" /></TouchableOpacity>
+    <RectButton style={style.Send} onPress={()=>{navigation.navigate('Detail')}}><Entypo name="eye" size={37} color="white" /></RectButton>
     </LinearGradient>
 </View>
  )

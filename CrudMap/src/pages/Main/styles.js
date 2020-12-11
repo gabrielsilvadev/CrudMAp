@@ -112,7 +112,8 @@ textBox:{
     
 },
 Send:{
-   borderWidth:0.5,
+    borderWidth:2,
+    display:'flex',
     borderColor:'#fff',
     backgroundColor:'#5204DB',
     borderRadius:15,
@@ -125,8 +126,8 @@ Send:{
     alignSelf:'flex-end',
     justifyContent:'center',
     alignItems:'center',
-    marginVertical:135,
-    elevation:18
+    elevation:18,
+    marginTop:80
  
 }
 

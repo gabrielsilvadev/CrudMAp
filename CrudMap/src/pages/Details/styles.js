@@ -47,7 +47,7 @@ export const style = StyleSheet.create({
     marginBottom:28
  },
  send:{
-    borderWidth:0.5,
+    borderWidth:2,
     borderColor:'#fff',
     backgroundColor:'#5204DB',
     borderRadius:15,

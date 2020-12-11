@@ -2543,6 +2543,11 @@ expo-permissions@~9.0.1:
   resolved "https://registry.yarnpkg.com/expo-permissions/-/expo-permissions-9.0.1.tgz#dc10b58654bbe39bbbed5827369942b01b08055e"
   integrity sha512-CosJgy8XQRN/OFG2JTQDcFxz3XTGi27coCMym/hVXWtQfk0z6PwdRG5IXHfLGuSckwIcgmirrwm2+Zc0X3MmNg==
 
+expo-print@~9.0.1:
+  version "9.0.2"
+  resolved "https://registry.yarnpkg.com/expo-print/-/expo-print-9.0.2.tgz#1138bbc0dc94799962980cdc9c09475ba4943d4d"
+  integrity sha512-Jk8Q4QOdkCGY4zqr+omLMnsX5FPQYz6Ug2TfUeAixwPfJuNuGUPPvWiQhucxV4idS0C1nHh4HAXj+S27zDZwig==
+
 expo-splash-screen@^0.5.0:
   version "0.5.0"
   resolved "https://registry.yarnpkg.com/expo-splash-screen/-/expo-splash-screen-0.5.0.tgz#cad0eb77a3eade2c7101d169b8655e7ee8053c2f"
@@ -4568,11 +4573,6 @@ react-native-gesture-handler@^1.6.0:
     hoist-non-react-statics "^3.3.0"
     invariant "^2.2.4"
     prop-types "^15.7.2"
-
-react-native-html-to-pdf@^0.8.0:
-  version "0.8.0"
-  resolved "https://registry.yarnpkg.com/react-native-html-to-pdf/-/react-native-html-to-pdf-0.8.0.tgz#c6e27296a05de76ac3800406144ebdfd77cfe054"
-  integrity sha512-64Hx7JbX3sZ1iXgouuCI25/C6o8BHyTzOO3RzvLfw4O8VcdpB+wJ4d24iWRtKjeJmArsubN9+WMOebBxQaPzJw==
 
 react-native-iphone-x-helper@^1.2.1:
   version "1.2.1"
