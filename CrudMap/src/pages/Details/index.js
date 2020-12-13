@@ -12,8 +12,7 @@ const navigation = useNavigation();
 
 const [data,setData] =useState([]);
 async function NextTo(){
-
-  navigation.navigate('Send',{data})  
+ navigation.navigate('Send')  
 }
 useEffect(()=>{
      getData().then(item => setData(...data,item));

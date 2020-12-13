@@ -20,6 +20,11 @@ useEffect(()=>{
     
  
     async function SendEmail(email){
+        if (email==''){
+         Alert.alert(
+             'Insira seu Email'
+         )
+        }else{
         const render =await data.map(item=>{
             return (
              `
@@ -41,7 +46,7 @@ useEffect(()=>{
         isHtml:true,
         body:String(render)
         })
-        
+      }        
      }
     return(
         <View style={style.conteiner}>

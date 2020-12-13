@@ -51,10 +51,11 @@ const data ={
     longitude 
    }
 
-
+function Tonext(){
+    navigation.navigate('Detail')
+}
 async function Save(data,id){
-  await createValue(data,id).then
- (response => navigation.navigate('Detail'))
+  await createValue(data,id)
     setlatitude(null);
     setlongitude(null);
     setName('');
@@ -71,19 +72,16 @@ async function Save(data,id){
         value={name} 
         placeholder=' Nome ' 
         onChangeText={setName}
-        autoFocus={true}
         autoCorrect={true} 
         style={style.input}/>
         <TextInput
         value={nameCientifico}
-        autoFocus={true}
         onChangeText={setNameCientifico} 
         placeholder=' Nome Cientifico ' 
         autoCorrect={true}  
         style={style.input}/>
         <TextInput 
         value={informacoes}
-        autoFocus={true}
         onChangeText={setInformacoes}
         multiline={true} 
         maxLength={200} 
@@ -107,7 +105,7 @@ async function Save(data,id){
           <Text style={style.textBox}>Exluir</Text>
       </RectButton>
     </View>
-    <RectButton style={style.Send} onPress={()=>{navigation.navigate('Detail')}}><Entypo name="eye" size={37} color="white" /></RectButton>
+    <RectButton style={style.Send} onPress={Tonext}><Entypo name="eye" size={37} color="white" /></RectButton>
     </LinearGradient>
 </View>
  )
