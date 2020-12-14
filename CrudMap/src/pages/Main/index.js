@@ -65,7 +65,7 @@ async function Save(data,id){
 
 
  return (
- <View style={style.conteiner}>
+
      <LinearGradient colors={['#9C07F2','#5204DB']} style={style.gradient}>
     <View  style={style.ConteinerInput}>
         <TextInput
@@ -107,6 +107,6 @@ async function Save(data,id){
     </View>
     <RectButton style={style.Send} onPress={Tonext}><Entypo name="eye" size={37} color="white" /></RectButton>
     </LinearGradient>
-</View>
+
  )
 }

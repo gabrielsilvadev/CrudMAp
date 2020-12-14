@@ -1,10 +1,6 @@
 import {StyleSheet} from 'react-native'
 
 export const style = StyleSheet.create({
- conteiner:{
-     flex:1,
- },
-
  input:{
     height:50,
     marginBottom:12,

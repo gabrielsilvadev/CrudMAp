@@ -1,9 +1,6 @@
 import {StyleSheet} from 'react-native';
 
 export const  style = StyleSheet.create({
-    conteiner:{
-    flex:1,
-    },
     icon:{
      marginTop:40,
      alignSelf:'flex-start',

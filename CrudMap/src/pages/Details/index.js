@@ -1,5 +1,5 @@
 import React, { useEffect ,useState} from 'react';
-import {View,Text,TouchableOpacity,FlatList,Alert} from 'react-native';
+import {View,Text,FlatList,Alert} from 'react-native';
 import {style} from './styles';
 import {LinearGradient} from 'expo-linear-gradient';
 import { Feather,MaterialCommunityIcons,MaterialIcons} from '@expo/vector-icons';
@@ -9,11 +9,12 @@ import {getData,clear} from '../../services/banco';
 
 export  default function Main(){
 const navigation = useNavigation();
-
 const [data,setData] =useState([]);
+
 async function NextTo(){
  navigation.navigate('Send')  
 }
+
 useEffect(()=>{
      getData().then(item => setData(...data,item));
   
@@ -42,7 +43,7 @@ async function  edition(data,id){
  navigation.navigate('Main',index)
 }
  return (
- <View style={style.conteiner}>
+
      <LinearGradient colors={['#9C07F2','#5204DB']} style={style.gradient}>
      <BorderlessButton  style={style.icon} onPress={()=>{navigation.navigate('Main',{id:null})}} ><MaterialIcons  name="keyboard-backspace" size={30} color="white" /></BorderlessButton>
       <FlatList 
@@ -68,6 +69,6 @@ async function  edition(data,id){
   />
   <RectButton onPress={()=>NextTo()} style={style.send}><MaterialIcons name="send" size={40} color="white" /></RectButton>
    </LinearGradient>  
- </View>
+
  )
 }

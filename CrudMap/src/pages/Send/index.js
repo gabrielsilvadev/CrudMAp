@@ -49,12 +49,11 @@ useEffect(()=>{
       }        
      }
     return(
-        <View style={style.conteiner}>
          <LinearGradient colors={['#9C07F2','#5204DB']} style={style.gradient}>
          <BorderlessButton style={style.icon} onPress={navigation.goBack}><MaterialIcons   name="keyboard-backspace" size={30} color="white" /></BorderlessButton>
         <TextInput className='input' autoFocus={true}blurOnSubmit={true} autoCompleteType="email" data={email} onChangeText={setEmail} style={style.input} placeholder='Email'/>
         <RectButton onPress={()=>SendEmail(email)}style={style.button}><MaterialIcons name="send" size={30} color="white" /></RectButton>
         </LinearGradient>
-        </View>
+    
     );
 }
