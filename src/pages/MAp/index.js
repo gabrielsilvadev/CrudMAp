@@ -20,6 +20,7 @@ async function getGeo(){
 useEffect(()=>{
 getGeo();
 },[])
+
 const NewDados =route.params
 
 return (
