@@ -15,10 +15,11 @@ console.log(data)
 async function NextTo(){
  navigation.navigate('Send')  
 }
-
+async function GetData(){
+ await getData().then(item => setData(...data,item));
+}
 useEffect(()=>{
-     getData().then(item => setData(...data,item));
-  
+ GetData();
 },[])
 async function Clear(id){
     Alert.alert(
@@ -48,9 +49,9 @@ async function  edition(data,id){
      <LinearGradient colors={['#9C07F2','#5204DB']} style={style.gradient}>
      <View style={style.header}>
      <BorderlessButton  style={{marginLeft:20}} onPress={()=>{navigation.navigate('Main',{id:null})}} ><MaterialIcons  name="keyboard-backspace" size={30} color="white" /></BorderlessButton>
-      <BorderlessButton style={{marginRight:20}} onPress={()=>{navigation.navigate('Map')}}><FontAwesome5 name="map-marked-alt" size={30} color="white" /></BorderlessButton>
+      <BorderlessButton style={{marginRight:20}} onPress={()=>{navigation.navigate('Map',{data})}}><FontAwesome5 name="map-marked-alt" size={30} color="white" /></BorderlessButton>
       </View>
-      <FlatList 
+      <FlatList  
       style={style.flatlist} 
       data={data} 
       keyExtractor={item =>String(item.id)}

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import {View,Text,TextInput} from 'react-native';
+import {View,Text,TextInput,ScrollView} from 'react-native';
 import {style} from './styles';
 import {LinearGradient} from 'expo-linear-gradient';
 import {useRoute,useNavigation} from '@react-navigation/native'
@@ -47,7 +47,7 @@ function Tonext(){
     navigation.navigate('Detail')
 }
 async function Save(id){
-   let data ={
+   const data ={
     name,
     nameCientifico,
     informacoes,
@@ -67,6 +67,7 @@ async function Save(id){
  return (
      <View style={style.conteiner}>
      <LinearGradient colors={['#9C07F2','#5204DB']} style={style.gradient}>
+    <ScrollView style={style.srollView}>
     <View  style={style.ConteinerInput}>
         <TextInput
         value={name} 
@@ -106,6 +107,7 @@ async function Save(id){
       </RectButton>
     </View>
     <RectButton style={style.Send} onPress={Tonext}><Entypo name="eye" size={37} color="white" /></RectButton>
+    </ScrollView>    
     </LinearGradient>
     </View>
  )

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { View,TextInput, Alert} from 'react-native';
 import {MaterialIcons } from '@expo/vector-icons';
 import  {style} from './styles';
-import {useNavigation} from '@react-navigation/native';;
+import {useNavigation,useFocusEffect} from '@react-navigation/native';;
 import {RectButton,BorderlessButton} from 'react-native-gesture-handler'
 import {LinearGradient} from 'expo-linear-gradient';
 import {getData} from '../../services/banco';
@@ -14,8 +14,10 @@ export default function Main(){
         const [data,setData] = useState([]);
         const [email, setEmail] = useState('');
     
-useEffect(()=>{
-    getData().then(items => setData(items));
+useFocusEffect(()=>{
+    async () =>{
+    await getData().then(item => setData(...data,item));
+    }
    },[])
     
  

@@ -11,10 +11,10 @@
       "backgroundColor": "#ecf0f1"
     },
     "updates": {
-      "fallbackToCacheTimeout": 0
+      "fallbackToCacheTimeout": 2
     },
     "assetBundlePatterns": [
-      "**/*"
+      "./assets/*.png"
     ],
     "ios": {
       "supportsTablet": true

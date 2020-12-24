@@ -4,6 +4,9 @@ export const style = StyleSheet.create({
  conteiner:{
    flex:1
   },
+ srollView:{
+  width:'100%'
+  },
  input:{
     height:50,
     marginBottom:12,
@@ -37,6 +40,7 @@ export const style = StyleSheet.create({
      marginTop:30,
      justifyContent:'center',
      borderWidth:1,
+     alignSelf:'center',
      alignItems:'center',
      borderColor:'rgba(255, 255, 255, 0.9)',
  },
