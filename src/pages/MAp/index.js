@@ -9,17 +9,9 @@ import Geo from '../../services/location';
 export default function Map(){
 const route = useRoute();
 
-const [latitude,setlatitude] = useState('');
-const [longitude,setlongitude] = useState('');
 
-async function getGeo(){
-  const geo =  await Geo()
-  setlongitude(geo.longitude)
-  setlatitude(geo.latitude)
-}
-useEffect(()=>{
-getGeo();
-},[])
+
+
 
 const NewDados =route.params
 
@@ -31,8 +23,8 @@ return (
         provider={PROVIDER_GOOGLE}
         style={styles.map}
         initialRegion={{
-        latitude:latitude,
-        longitude:longitude,
+        latitude:-7.352756,
+        longitude:-39.4664495,
         latitudeDelta: 0.0008, 
         longitudeDelta:0.0008,
       }}>

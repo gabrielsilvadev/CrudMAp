@@ -3,13 +3,17 @@ import AsyncStorage from '@react-native-community/async-storage'
      try { 
         data.id = id ? id : new Date().getTime();
         let savedItems=[]
-      
+        
         if(id){
+          const response = await AsyncStorage.getItem('data');
+          savedItems = JSON.parse(response);
           const index = await savedItems.findIndex(item => item.id ===id);
           savedItems[index]=data;
           await AsyncStorage.setItem('data',JSON.stringify(savedItems))
 
         }else{
+        const response = await AsyncStorage.getItem('data');
+        savedItems = JSON.parse(response);
         savedItems=[...savedItems,data]
       
         await AsyncStorage.setItem('data',JSON.stringify(savedItems))
