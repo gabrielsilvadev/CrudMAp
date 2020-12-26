@@ -29,6 +29,7 @@ export const style = StyleSheet.create({
      borderWidth:1,
      height:136,
      width:338,
+     marginTop:3,
      borderRadius:13,
      backgroundColor:'#ffff',
      flexDirection:'row',

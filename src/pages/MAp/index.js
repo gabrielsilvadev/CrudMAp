@@ -4,14 +4,10 @@ import vector from '../../../assets/Vector.png';
 import MapView,{Marker,Callout,PROVIDER_GOOGLE}from 'react-native-maps';
 import {styles} from '../MAp/style'
 import { useRoute } from '@react-navigation/native';
-import Geo from '../../services/location';
+
 
 export default function Map(){
 const route = useRoute();
-
-
-
-
 
 const NewDados =route.params
 
@@ -23,8 +19,8 @@ return (
         provider={PROVIDER_GOOGLE}
         style={styles.map}
         initialRegion={{
-        latitude:-7.352756,
-        longitude:-39.4664495,
+        latitude:-7.2284564,
+        longitude:-39.3934934,
         latitudeDelta: 0.0008, 
         longitudeDelta:0.0008,
       }}>
