@@ -34,6 +34,7 @@ return (
            y:0.001,
          }}
          
+         
          style={styles.Marke}
          coordinate={{
           latitude:dados.latitude,
