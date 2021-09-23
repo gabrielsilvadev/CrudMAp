@@ -10,10 +10,10 @@ export  default function Main(){
 const [distanceInput, setDistanceInput] = useState("")
 const [starShipList, setStarShipList] = useState([])
 const [ stopShipList, setStopStartShipList] = useState([])
+
 useEffect(()=>{
  getStartShips()
 },[])
-
 async function getStartShips(){
     const data = await StarshipsService.findAll(1)
     setStarShipList(data)
