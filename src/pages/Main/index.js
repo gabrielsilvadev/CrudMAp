@@ -31,7 +31,6 @@ function handleButton(){
     setDistanceInput("")
     setStopStartShipList(calculateData)
 
-
 }
 
  return (
@@ -59,8 +58,8 @@ function handleButton(){
       <View style={style.conteinerFlatlist} >
           <View style={style.ConteinerText}>
           <Text style={style.text}>Mega luz: {item.MGLT}</Text>
-          <Text style={style.text}>Nome do Navio: {item.name}</Text>
-          <Text style={style.text}>Modelo: {item.model}</Text>
+          <Text style={style.text}>Nome da nave: {item.name}</Text>
+          <Text style={style.text}>Nave stelar: {item.starship_class}</Text>
           <Text style={style.text}>Paradas: {item.stops}</Text>
           </View>
       </View>

@@ -68,9 +68,10 @@ flatlist:{
 },
 conteinerFlatlist:{
     borderWidth:0.9,
+    flex:1,
     borderColor: "grey",
-    height:136,
-    width:338,
+    height:"50%",
+    width: "98%",
     marginTop:2,
     borderRadius:13,
     backgroundColor:'#ffff',
