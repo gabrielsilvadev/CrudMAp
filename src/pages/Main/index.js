@@ -32,7 +32,6 @@ function handleButton(){
     setStopStartShipList(calculateData)
 
 }
-
  return (
      <View style={style.conteiner}>
      <LinearGradient colors={['#9C07F2','#5204DB']} style={style.gradient}>
