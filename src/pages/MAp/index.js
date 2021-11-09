@@ -1,7 +1,8 @@
-import React, {useEffect, useState} from 'react';
+import React from 'react';
 import {View,Text} from 'react-native';
 import vector from '../../../assets/Vector.png';
-import MapView,{Marker,Callout,PROVIDER_GOOGLE}from 'react-native-maps';
+import MapView,{Marker,Callout}from 'react-native-maps';
+
 import {styles} from '../MAp/style'
 import { useRoute } from '@react-navigation/native';
 
@@ -9,20 +10,17 @@ import { useRoute } from '@react-navigation/native';
 export default function Map(){
 const route = useRoute();
 
-const NewDados =route.params
+const NewDados = route.params
 
 return (
      <View style={styles.container}>
-      
           <MapView 
-        
-        provider={PROVIDER_GOOGLE}
         style={styles.map}
         initialRegion={{
-        latitude:-7.2284564,
-        longitude:-39.3934934,
-        latitudeDelta: 0.0008, 
-        longitudeDelta:0.0008,
+        latitude:-7.2382894,
+        longitude:-39.4101016,
+        latitudeDelta: 0.0922,
+        longitudeDelta: 0.0421,
       }}>
        {NewDados.data.map(dados =>{
          return (

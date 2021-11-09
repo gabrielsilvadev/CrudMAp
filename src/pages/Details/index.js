@@ -11,7 +11,7 @@ import {getData,clear} from '../../services/banco';
 export  default function Main(){
 const navigation = useNavigation();
 const [data,setData] =useState([]);
-console.log(data)
+
 async function NextTo(){
  navigation.navigate('Send')  
 }

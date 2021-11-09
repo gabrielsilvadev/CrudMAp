@@ -9,6 +9,7 @@
       "image": "./assets/splash.png",
       "resizeMode": "contain",
       "backgroundColor": "#ecf0f1"
+      
     },
     "updates": {
       "fallbackToCacheTimeout": 2
@@ -20,7 +21,13 @@
       "supportsTablet": true
     },
     "android": {
+       "config": {
+        "googleMaps": {
+           "apiKey": "[AIzaSyAGrJ1A0X8hX72X8ShPVBthcYQc1AQw5tg]"
+        }
+      },
       "package": "com.sr.lobak.CRUDMAP"
+       
     },
     "web": {
       "favicon": "./assets/favicon.png"

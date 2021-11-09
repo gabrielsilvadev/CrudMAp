@@ -9,7 +9,7 @@ export default function Header(){
    const navigation = useNavigation();
     return (
     <View style={styles.consteiner}>
-      <BorderlessButton onPress={navigation.goBack}>
+      <BorderlessButton onPress={()=>navigation.goBack()}>
       <MaterialIcons name='keyboard-backspace' size={30} color='white'/>
       </BorderlessButton>
     <Text style={styles.title}>Procure no Mapa</Text>
@@ -20,7 +20,7 @@ export default function Header(){
     )
 }
 
-const styles= StyleSheet.create({
+const styles = StyleSheet.create({
  consteiner:{
   padding:24,
   backgroundColor:'#9C07F2',
@@ -35,7 +35,7 @@ const styles= StyleSheet.create({
    justifyContent:'center',
    color:'white',
    fontSize:18,
-   fontWeight:'bold'
+   fontWeight:'bold',
  }
 
 })
